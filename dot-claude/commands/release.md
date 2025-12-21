@@ -56,3 +56,11 @@ gh release create $ARGUMENTS --title "$ARGUMENTS" --notes-file CHANGELOG.md
 ## 注意
 - mainブランチで実行すること
 - すべてのテストがパスしていることを確認
+
+---
+
+## 次のステップ
+
+リリース完了です。お疲れさまでした。
+
+次のイテレーションを開始する場合は `/init` または `/requirements` から始めてください。

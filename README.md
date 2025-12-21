@@ -106,15 +106,22 @@ claude-code-issue-driven-tdd-template/
 企画・設計: /init → /requirements → /design → /breakdown → /clear
     ↓
 開発（繰り返し）:
-  準備:   /new-issue → /issue → /research → /clear
-  計画:   /plan → /clear
-  実装:   /test ⇄ /impl（TDDサイクル）
-           ↓ ⚠️ /clear しない
-  完了:   reviewerでレビュー ⇄ 修正（ループ）
-           → /pr → /merge → /clear
+  準備:   /new-issue #1（→breakdown更新）→ /issue → /research
+  計画:   → /plan（→Issueにコメント保存）→ ブランチ作成 → /clear
+  実装:   /test ⇄ /impl（TDDサイクル）⚠️ /clear しない
+  完了:   → reviewerでレビュー ⇄ 修正（ループ）
+          → /pr（→breakdown更新）→ /merge（→breakdown更新）→ /clear
     ↓
 リリース: /release v1.0.0
 ```
+
+**clearのタイミング**:
+- ブランチ作成後（計画はIssueコメントに保存済み）
+- マージ完了後（次のIssueに移る前）
+
+### ブランチ・PR命名規則
+- **ブランチ**: `[種別]/issue_[番号]` （例: `infra/issue_1`, `api/issue_5`）
+- **PRタイトル**: `[種別] #[番号]: [説明]` （例: `infra #1: プロジェクト初期化`）
 
 ---
 
