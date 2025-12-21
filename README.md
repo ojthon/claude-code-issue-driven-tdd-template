@@ -1,6 +1,6 @@
 # claude-code-issue-driven-tdd-template
 
-A transparent, command-driven development workflow for Claude Code. Issue-driven + TDD with 13 Slash commands. Understand every step, customize everything.
+A transparent, command-driven development workflow for Claude Code. Issue-driven + TDD with 14 Slash commands. Understand every step, customize everything.
 
 ---
 
@@ -70,6 +70,7 @@ claude-code-issue-driven-tdd-template/
 | `/init` | プロジェクト初期化・ヒアリング |
 | `/requirements` | 要件定義ドキュメント生成 |
 | `/design` | アーキテクチャ・DB・API設計 |
+| `/breakdown` | 設計からIssueへのブレイクダウン |
 
 ### 開発フェーズ
 
@@ -102,7 +103,7 @@ claude-code-issue-driven-tdd-template/
 ## 開発フロー
 
 ```
-企画・設計: /init → /requirements → /design → /clear
+企画・設計: /init → /requirements → /design → /breakdown → /clear
     ↓
 開発（繰り返し）:
   準備:   /new-issue → /issue → /research → /clear

@@ -82,7 +82,7 @@ fi
 # Slashコマンドをコピー
 echo -e "${BLUE}📝 Slashコマンドをコピー中...${NC}"
 cp "$TEMPLATE_ROOT/dot-claude/commands/"*.md "$TARGET_DIR/commands/"
-echo -e "${GREEN}   ✅ 13個のSlashコマンドをコピーしました${NC}"
+echo -e "${GREEN}   ✅ 14個のSlashコマンドをコピーしました${NC}"
 
 # サブエージェントをコピー
 echo -e "${BLUE}🤖 サブエージェントをコピー中...${NC}"
@@ -122,7 +122,7 @@ echo ""
 
 if [ "$GLOBAL_INSTALL" = true ]; then
     echo -e "${BLUE}インストールされたファイル:${NC}"
-    echo "  ~/.claude/commands/  - 13個のSlashコマンド"
+    echo "  ~/.claude/commands/  - 14個のSlashコマンド"
     echo "  ~/.claude/agents/    - reviewerサブエージェント"
     echo ""
     echo -e "${BLUE}次のステップ:${NC}"
@@ -134,10 +134,11 @@ if [ "$GLOBAL_INSTALL" = true ]; then
     echo ""
     echo -e "${YELLOW}注意:${NC}"
     echo "  グローバルインストールでは、CLAUDE.mdとdocs/は"
-    echo "  各プロジェクトで個別に作成してください。"
+    echo "  各プロジェクトで /init → /requirements → /design の"
+    echo "  流れで自動生成されます。"
 else
     echo -e "${BLUE}作成されたファイル:${NC}"
-    echo "  .claude/commands/    - 13個のSlashコマンド"
+    echo "  .claude/commands/    - 14個のSlashコマンド"
     echo "  .claude/agents/      - reviewerサブエージェント"
     echo "  CLAUDE.md            - プロジェクト設定（要編集）"
     echo "  docs/                - 設計ドキュメントテンプレート"
@@ -153,7 +154,7 @@ fi
 
 echo ""
 echo -e "${BLUE}開発フロー:${NC}"
-echo "  企画・設計: /init → /requirements → /design → /clear"
+echo "  企画・設計: /init → /requirements → /design → /breakdown → /clear"
 echo "  開発:       /new-issue → /issue → /research → /clear"
 echo "              /plan → /clear"
 echo "              /test ⇄ /impl（TDDサイクル）"
