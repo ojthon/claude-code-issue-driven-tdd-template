@@ -27,17 +27,20 @@ graph TB
 
 ## 2. 技術スタック
 
+**注意**: バージョンは公式サイトで最新の安定版を確認してください。
+
 ### フロントエンド
-| 技術 | バージョン | 用途 |
+| 技術 | 公式サイト | 用途 |
 |------|-----------|------|
-| Next.js | 15.x | フレームワーク |
-| TypeScript | 5.x | 型システム |
-| Tailwind CSS | 3.x | スタイリング |
+| Next.js | https://nextjs.org | フレームワーク (App Router) |
+| TypeScript | https://www.typescriptlang.org | 型システム (strict mode) |
+| Tailwind CSS | https://tailwindcss.com | スタイリング |
+| Biome | https://biomejs.dev | Linter + Formatter |
 
 ### バックエンド
-| 技術 | バージョン | 用途 |
+| 技術 | 公式サイト | 用途 |
 |------|-----------|------|
-| [技術名] | [バージョン] | [用途] |
+| [技術名] | [公式サイト] | [用途] |
 
 ### インフラ
 | 技術 | 用途 |

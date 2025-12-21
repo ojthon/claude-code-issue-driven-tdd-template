@@ -17,18 +17,25 @@
 
 ## 技術スタック
 
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
-- Prisma + PostgreSQL
+**注意**: バージョンは公式サイトで最新の安定版を確認してください。
+
+### フレームワーク・言語
+- Next.js (App Router) - https://nextjs.org
+- TypeScript (strict mode) - https://www.typescriptlang.org
+- Tailwind CSS - https://tailwindcss.com
+- Prisma - https://www.prisma.io
+- PostgreSQL - https://www.postgresql.org
 - React Hook Form + Zod
+
+### Linter・フォーマッター
+- Biome（ESLint + Prettierの代替、高速）
 
 ### テスト
 - Vitest + React Testing Library
 
 ### インフラ
 - Vercel
-- Vercel Postgres / Supabase
+- Vercel Postgres / Supabase / Neon
 
 ## ディレクトリ構造
 
@@ -62,7 +69,7 @@ tests/                # テスト
 | 開発サーバー | `npm run dev` |
 | テスト | `npm test` |
 | ビルド | `npm run build` |
-| Lint | `npm run lint` |
+| Lint + Format | `npx biome check --write .` |
 | DB生成 | `npx prisma generate` |
 | DBマイグレーション | `npx prisma migrate dev` |
 | DB確認 | `npx prisma studio` |

@@ -17,17 +17,23 @@
 
 ## 技術スタック
 
+**注意**: バージョンは公式サイトで最新の安定版を確認してください。
+
 ### フロントエンド
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
+- Next.js (App Router) - https://nextjs.org
+- TypeScript (strict mode) - https://www.typescriptlang.org
+- Tailwind CSS - https://tailwindcss.com
 - React Hook Form + Zod
 
 ### バックエンド
-- FastAPI
-- Python 3.12
-- SQLAlchemy + Alembic
-- PostgreSQL
+- FastAPI - https://fastapi.tiangolo.com
+- Python (最新安定版) - https://www.python.org
+- SQLAlchemy 2.x + Alembic
+- PostgreSQL - https://www.postgresql.org
+
+### Linter・フォーマッター
+- フロントエンド: Biome（ESLint + Prettierの代替、高速）
+- バックエンド: Ruff（Black + isort + Flake8の代替、高速）
 
 ### テスト
 - フロントエンド: Vitest + React Testing Library
@@ -70,7 +76,7 @@ backend/
 | 開発サーバー | `cd frontend && npm run dev` |
 | テスト | `cd frontend && npm test` |
 | ビルド | `cd frontend && npm run build` |
-| Lint | `cd frontend && npm run lint` |
+| Lint + Format | `cd frontend && npx biome check --write .` |
 
 ### バックエンド
 | 操作 | コマンド |
@@ -78,7 +84,7 @@ backend/
 | 開発サーバー | `cd backend && uvicorn app.main:app --reload` |
 | テスト | `cd backend && pytest` |
 | マイグレーション | `cd backend && alembic upgrade head` |
-| Lint | `cd backend && ruff check .` |
+| Lint + Format | `cd backend && ruff check --fix . && ruff format .` |
 
 ## 開発ルール
 
