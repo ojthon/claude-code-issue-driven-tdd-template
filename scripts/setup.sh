@@ -107,7 +107,7 @@ if [ "$GLOBAL_INSTALL" = false ]; then
     for f in docs/*.template.md; do
         mv "$f" "${f%.template.md}.md"
     done
-    echo -e "${GREEN}   ✅ 4つのドキュメントテンプレートをコピーしました${NC}"
+    echo -e "${GREEN}   ✅ 5つのドキュメントテンプレートをコピーしました${NC}"
 
     # .gitignore更新
     if ! grep -q ".claude/settings.local.json" .gitignore 2>/dev/null; then
