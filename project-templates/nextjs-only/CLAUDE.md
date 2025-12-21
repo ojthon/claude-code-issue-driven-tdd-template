@@ -22,7 +22,7 @@
 ### フレームワーク・言語
 - Next.js (App Router) - https://nextjs.org
 - TypeScript (strict mode) - https://www.typescriptlang.org
-- Tailwind CSS - https://tailwindcss.com
+- CSS Modules（Next.js標準のスコープ付きCSS）
 - Prisma - https://www.prisma.io
 - PostgreSQL - https://www.postgresql.org
 - React Hook Form + Zod
@@ -41,19 +41,25 @@
 
 ```
 src/
-├── app/              # App Router
-│   ├── (auth)/       # 認証関連ページ
-│   ├── (main)/       # メインページ
-│   ├── api/          # API Routes
-│   └── actions/      # Server Actions
-├── components/       # UIコンポーネント
-│   ├── ui/           # 汎用UI
-│   └── features/     # 機能別
-├── hooks/            # カスタムフック
-├── lib/              # ユーティリティ
-│   ├── prisma.ts     # Prismaクライアント
-│   └── utils.ts      # 汎用関数
-└── types/            # 型定義
+├── app/                    # Next.js App Router
+│   ├── (auth)/             # 認証関連ルート
+│   ├── (main)/             # メインルート
+│   ├── api/                # API Routes
+│   └── actions/            # Server Actions
+├── features/               # 機能別モジュール（Feature-based）
+│   ├── auth/               # 認証機能
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── actions/
+│   │   └── types.ts
+│   └── [feature]/          # その他の機能
+├── components/             # 共通UIコンポーネント
+│   └── ui/                 # ボタン、入力等の汎用UI
+├── hooks/                  # 共通カスタムフック
+├── lib/                    # ユーティリティ
+│   ├── prisma.ts           # Prismaクライアント
+│   └── utils.ts            # 汎用関数
+└── types/                  # 共通型定義
 
 prisma/
 ├── schema.prisma     # スキーマ定義
@@ -79,7 +85,8 @@ tests/                # テスト
 ### コーディング規約
 - コンポーネントは関数コンポーネント + TypeScript
 - Server ActionsでDB操作
-- スタイルはTailwind CSS
+- スタイルはCSS Modules（*.module.css）
+- Feature-based構成で機能単位にコードを整理
 - フォームはReact Hook Form + Zod
 
 ### エラーハンドリング方針

@@ -34,7 +34,7 @@ graph TB
 |------|-----------|------|
 | Next.js | https://nextjs.org | フレームワーク (App Router) |
 | TypeScript | https://www.typescriptlang.org | 型システム (strict mode) |
-| Tailwind CSS | https://tailwindcss.com | スタイリング |
+| CSS Modules | - | スタイリング（Next.js標準） |
 | Biome | https://biomejs.dev | Linter + Formatter |
 
 ### バックエンド

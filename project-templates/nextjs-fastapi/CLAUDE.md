@@ -22,7 +22,7 @@
 ### フロントエンド
 - Next.js (App Router) - https://nextjs.org
 - TypeScript (strict mode) - https://www.typescriptlang.org
-- Tailwind CSS - https://tailwindcss.com
+- CSS Modules（Next.js標準のスコープ付きCSS）
 - React Hook Form + Zod
 
 ### バックエンド
@@ -31,9 +31,10 @@
 - SQLAlchemy 2.x + Alembic
 - PostgreSQL - https://www.postgresql.org
 
-### Linter・フォーマッター
+### Linter・フォーマッター・型チェック
 - フロントエンド: Biome（ESLint + Prettierの代替、高速）
 - バックエンド: Ruff（Black + isort + Flake8の代替、高速）
+- Python型チェック: Mypy
 
 ### テスト
 - フロントエンド: Vitest + React Testing Library
@@ -49,14 +50,22 @@
 ```
 frontend/
 ├── src/
-│   ├── app/           # App Router
-│   ├── components/    # UIコンポーネント
-│   │   ├── ui/        # 汎用UI
-│   │   └── features/  # 機能別
-│   ├── hooks/         # カスタムフック
-│   ├── lib/           # ユーティリティ
-│   └── types/         # 型定義
-└── tests/             # テスト
+│   ├── app/               # Next.js App Router
+│   │   ├── (auth)/        # 認証関連ルート
+│   │   └── (main)/        # メインルート
+│   ├── features/          # 機能別モジュール（Feature-based）
+│   │   ├── auth/          # 認証機能
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── api/
+│   │   │   └── types.ts
+│   │   └── [feature]/     # その他の機能
+│   ├── components/        # 共通UIコンポーネント
+│   │   └── ui/            # ボタン、入力等の汎用UI
+│   ├── hooks/             # 共通カスタムフック
+│   ├── lib/               # ユーティリティ
+│   └── types/             # 共通型定義
+└── tests/                 # テスト
 
 backend/
 ├── app/
@@ -85,6 +94,7 @@ backend/
 | テスト | `cd backend && pytest` |
 | マイグレーション | `cd backend && alembic upgrade head` |
 | Lint + Format | `cd backend && ruff check --fix . && ruff format .` |
+| 型チェック | `cd backend && mypy .` |
 
 ## 開発ルール
 
@@ -92,11 +102,12 @@ backend/
 
 #### フロントエンド
 - コンポーネントは関数コンポーネント + TypeScript
-- スタイルはTailwind CSS
+- スタイルはCSS Modules（*.module.css）
+- Feature-based構成で機能単位にコードを整理
 - 状態管理は原則React Hook Form + useReducer
 
 #### バックエンド
-- 型ヒント必須
+- 型ヒント必須（Mypyで静的型チェック）
 - Pydanticでバリデーション
 - サービス層でビジネスロジック
 
