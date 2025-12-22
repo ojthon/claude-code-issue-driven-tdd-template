@@ -1,6 +1,6 @@
 # claude-code-issue-driven-tdd-template
 
-A transparent, command-driven development workflow for Claude Code. Issue-driven + TDD with 14 Slash commands. Understand every step, customize everything.
+A transparent, command-driven development workflow for Claude Code. Issue-driven + TDD with 12 Slash commands + 1 subagent. Understand every step, customize everything.
 
 ---
 
@@ -49,7 +49,7 @@ claude
 ```
 claude-code-issue-driven-tdd-template/
 ├── dot-claude/              # → .claude/ にコピー
-│   ├── commands/            # 13個のSlashコマンド
+│   ├── commands/            # 12個のSlashコマンド
 │   └── agents/              # reviewerサブエージェント
 ├── project-templates/       # → プロジェクトルートに配置
 │   ├── nextjs-fastapi/      # Next.js + FastAPI 構成
@@ -82,7 +82,6 @@ claude-code-issue-driven-tdd-template/
 | `/plan [内容]` | 実装計画・テストケース設計 |
 | `/test [対象]` | テスト作成（TDD Red） |
 | `/impl [対象]` | 実装（TDD Green→Refactor） |
-| `/review` | reviewerサブエージェントでレビュー |
 | `/pr [Issue番号]` | PR作成 |
 | `/merge` | PRマージ |
 
@@ -94,9 +93,9 @@ claude-code-issue-driven-tdd-template/
 
 ### サブエージェント
 
-| 名前 | 説明 |
-|------|------|
-| `reviewer` | コードレビュー専門。CLAUDE.md準拠・品質・セキュリティ・パフォーマンス観点で分析 |
+| 呼び出し方 | 説明 |
+|------------|------|
+| `reviewerでレビューして` | コードレビュー専門。CLAUDE.md・設計ドキュメント準拠・品質・セキュリティ・パフォーマンス観点で分析 |
 
 ---
 
