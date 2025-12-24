@@ -95,19 +95,38 @@ gh issue comment [Issue番号] --body "## 実装計画
 
 ---
 
-## ブランチ作成
+## Worktree作成（並列開発対応）
 
-計画をIssueに保存後、作業用ブランチを作成：
+計画をIssueに保存後、作業用worktreeを作成：
 
 ```bash
-git checkout -b [種別]/issue_[GitHub Issue番号]
+# worktreeディレクトリがなければ作成
+mkdir -p .worktrees
+
+# worktreeを作成（新しいブランチと作業ディレクトリを同時に作成）
+git worktree add .worktrees/issue_[GitHub Issue番号] -b [種別]-issue_[GitHub Issue番号]
 ```
 
-**ブランチ命名規則**: `[種別]/issue_[番号]`
+**ブランチ命名規則**: `[種別]-issue_[番号]`
 - 種別: infra, db, api, ui, feature, test, docs
-- 例: `infra/issue_1`, `api/issue_5`, `ui/issue_10`
+- 例: `infra-issue_1`, `api-issue_5`, `ui-issue_10`
+
+**Worktree作成例**:
+```bash
+mkdir -p .worktrees
+git worktree add .worktrees/issue_5 -b api-issue_5
+```
 
 ---
 
-ブランチ作成後、`/clear` してから `/test` で開始してください。
+## 次のステップ
+
+Worktree作成後：
+
+1. **新しいターミナルを開く**
+2. **worktreeディレクトリに移動**: `cd .worktrees/issue_[番号]`
+3. **Claude Codeを起動**: `claude`
+4. `/clear` してから `/test` で開始
+
+**注意**: 各worktreeは独立した作業ディレクトリです。複数のIssueを並列で開発できます。
 （計画は Issue コメントを参照）

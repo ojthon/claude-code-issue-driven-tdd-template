@@ -102,25 +102,48 @@ claude-code-issue-driven-tdd-template/
 ## 開発フロー
 
 ```
-企画・設計: /init → /requirements → /design → /breakdown → /clear
-    ↓
-開発（繰り返し）:
+企画・設計（メインディレクトリ）:
+  /init → /requirements → /design → /breakdown → /clear
+
+開発（繰り返し・並列可能）:
   準備:   /new-issue #1（→breakdown更新）→ /issue → /research
-  計画:   → /plan（→Issueにコメント保存）→ ブランチ作成 → /clear
+  計画:   → /plan（→Issueコメント保存、worktree作成）
+
+  ─── 新ターミナルでworktreeに移動 → claude → /clear ───
+
   実装:   /test ⇄ /impl（TDDサイクル）⚠️ /clear しない
   完了:   → reviewerでレビュー ⇄ 修正（ループ）
-          → /pr（→breakdown更新）→ /merge（→breakdown更新）→ /clear
-    ↓
-リリース: /release v1.0.0
+          → /pr（→breakdown更新）→ /merge（→breakdown更新、worktree削除）
+
+リリース（メインディレクトリ）:
+  /release v1.0.0
 ```
 
-**clearのタイミング**:
-- ブランチ作成後（計画はIssueコメントに保存済み）
-- マージ完了後（次のIssueに移る前）
+### 並列開発（git worktree）
+
+複数のIssueを同時に開発できます：
+
+```bash
+# メインディレクトリで各Issueのworktreeを作成
+/plan  # → .worktrees/issue_1 を作成
+/plan  # → .worktrees/issue_2 を作成
+
+# 各worktreeで別々のターミナル・Claude Codeセッションを起動
+Terminal 1: cd .worktrees/issue_1 && claude
+Terminal 2: cd .worktrees/issue_2 && claude
+```
+
+**利点**:
+- 各エージェントが独立したブランチで作業
+- ブランチ切り替えの競合が発生しない
+- breakdown.md は各タスクの担当セクションのみ編集
+
+**注意**: `.gitignore` に `.worktrees/` を追加してください。
 
 ### ブランチ・PR命名規則
-- **ブランチ**: `[種別]/issue_[番号]` （例: `infra/issue_1`, `api/issue_5`）
+- **ブランチ**: `[種別]-issue_[番号]` （例: `infra-issue_1`, `api-issue_5`）
 - **PRタイトル**: `[種別] #[番号]: [説明]` （例: `infra #1: プロジェクト初期化`）
+- **Worktree**: `.worktrees/issue_[番号]`
 
 ---
 
