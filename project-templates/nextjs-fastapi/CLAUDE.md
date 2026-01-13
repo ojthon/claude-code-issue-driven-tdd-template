@@ -27,18 +27,40 @@
 
 ## 開発原則
 
-- TDD (Red -> Green -> Refactor)
-- 実装後はreviewerサブエージェントでレビュー（独立コンテキストでバイアス回避）
-- PRにはテストが含まれていること
+### TDD（テスト駆動開発）
+
+MUST: すべてのコード変更で以下の順序を厳守する
+1. **Red** - まずテストを書く（または既存テストを修正する）
+2. **Red確認** - テストを実行し、失敗することを確認する
+3. **Green** - テストが通る最小限の実装を行う
+4. **Refactor** - コードを整理する
+
+NEVER: テストを書く前に実装コードを変更しない
+NEVER: テストが失敗することを確認せずに実装に進まない
+
+### レビュー
+
+MUST: 実装完了後はreviewerサブエージェントでレビューを行う
+- 独立コンテキストでバイアスを回避する
+
+### フロントエンド
+
+MUST: UI/UXのデザイン検討・設計・実装時は /frontend-design スキルを使用する
 
 ## 禁止事項
 
+NEVER: 以下を行ってはならない
+
+- テストを書く前に実装コードを変更すること
 - any型の使用
 - console.logの残存
-- N+1クエリ
 - 環境変数のハードコード
+- UI/UX作業で /frontend-design スキルを使用しないこと
+- N+1クエリ
 
 ## Frontend Design
+
+MUST: このセクションの内容に従ってフロントエンドを実装する
 
 Create distinctive frontends that surprise and delight. Avoid generic "AI slop" aesthetics.
 
@@ -101,3 +123,4 @@ Create atmosphere and depth rather than defaulting to solid colors.
 @docs/architecture.md
 @docs/database-schema.md
 @docs/api-spec.md
+@docs/breakdown.md
