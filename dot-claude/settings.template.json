@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -d backend ]; then cd backend && [ -d .venv ] && source .venv/bin/activate && [ -f .env ] && set -a && source .env && set +a && env >> \"$CLAUDE_ENV_FILE\"; fi"
+            "command": "if [ -d backend ]; then cd backend && VENV_DIR=\"\"; [ -d .venv ] && VENV_DIR=\".venv\"; [ -d venv ] && VENV_DIR=\"venv\"; [ -n \"$VENV_DIR\" ] && source \"$VENV_DIR/bin/activate\" && [ -f .env ] && set -a && source .env && set +a && env >> \"$CLAUDE_ENV_FILE\"; fi"
           }
         ]
       }
