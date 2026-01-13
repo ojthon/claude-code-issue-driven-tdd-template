@@ -89,6 +89,18 @@ echo -e "${BLUE}サブエージェントをコピー中...${NC}"
 cp "$TEMPLATE_ROOT/dot-claude/agents/"*.md "$TARGET_DIR/agents/"
 echo -e "${GREEN}   reviewerサブエージェントをコピーしました${NC}"
 
+# settings.json をコピー
+echo -e "${BLUE}settings.json をコピー中...${NC}"
+if [ -f "$TEMPLATE_ROOT/dot-claude/settings.template.json" ]; then
+    if [ -f "$TARGET_DIR/settings.json" ]; then
+        echo -e "${YELLOW}   settings.json が既に存在します。手動でマージしてください${NC}"
+        echo -e "${YELLOW}   テンプレート: $TEMPLATE_ROOT/dot-claude/settings.template.json${NC}"
+    else
+        cp "$TEMPLATE_ROOT/dot-claude/settings.template.json" "$TARGET_DIR/settings.json"
+        echo -e "${GREEN}   settings.json をコピーしました${NC}"
+    fi
+fi
+
 # プロジェクトインストールの場合のみ、テンプレートとドキュメントをコピー
 if [ "$GLOBAL_INSTALL" = false ]; then
     # CLAUDE.mdテンプレートをコピー
@@ -122,17 +134,19 @@ echo ""
 
 if [ "$GLOBAL_INSTALL" = true ]; then
     echo -e "${BLUE}インストールされたファイル:${NC}"
-    echo "  ~/.claude/commands/  - 2個のSlashコマンド"
-    echo "  ~/.claude/agents/    - reviewerサブエージェント"
+    echo "  ~/.claude/commands/     - 2個のSlashコマンド"
+    echo "  ~/.claude/agents/       - reviewerサブエージェント"
+    echo "  ~/.claude/settings.json - フック & パーミッション設定"
     echo ""
     echo -e "${BLUE}次のステップ:${NC}"
     echo "  任意のプロジェクトで /setup-project を実行"
 else
     echo -e "${BLUE}作成されたファイル:${NC}"
-    echo "  .claude/commands/    - 2個のSlashコマンド"
-    echo "  .claude/agents/      - reviewerサブエージェント"
-    echo "  CLAUDE.md            - プロジェクト設定（要編集）"
-    echo "  docs/                - 設計ドキュメントテンプレート"
+    echo "  .claude/commands/     - 2個のSlashコマンド"
+    echo "  .claude/agents/       - reviewerサブエージェント"
+    echo "  .claude/settings.json - フック & パーミッション設定"
+    echo "  CLAUDE.md             - プロジェクト設定（要編集）"
+    echo "  docs/                 - 設計ドキュメントテンプレート"
     echo ""
     echo -e "${BLUE}次のステップ:${NC}"
     echo "  /setup-project でプロジェクトを開始"

@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -d backend ]; then cd backend && [ -d .venv ] && source .venv/bin/activate && [ -f .env ] && set -a && source .env && set +a && env >> \"$CLAUDE_ENV_FILE\"; fi"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pytest*)",
+      "Bash(cd backend && pytest*)",
+      "Bash(cd backend && source .venv/bin/activate && pytest*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
