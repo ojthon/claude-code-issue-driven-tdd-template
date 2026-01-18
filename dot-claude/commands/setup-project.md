@@ -51,6 +51,50 @@ MUST: すべてのコード変更で以下の順序を厳守する
 NEVER: テストを書く前に実装コードを変更しない
 NEVER: テストが失敗することを確認せずに実装に進まない
 
+### テスト実行時の注意事項
+
+CRITICAL: テストプロセス多重起動・残存問題を防ぐため、以下を**必ず**遵守すること
+
+#### 実行前（必須）
+```bash
+# 残存プロセスの確認と終了（毎回実行）
+pgrep -f vitest && pkill -f vitest || true
+pgrep -f pytest && pkill -f pytest || true
+```
+
+#### テスト実行ルール
+
+NEVER: 以下を行ってはならない
+- `vitest`（watchモード）を単独実行すること → 必ず `vitest run` を使用
+- `npm run test:watch` を実行すること
+- バックグラウンドでテストを実行すること（`&`や`run_in_background`を使用しない）
+- 前のテストの完了を待たずに次のテストを実行すること
+
+MUST: 以下を遵守すること
+1. **特定ファイルのみテスト**（デフォルト）
+   ```bash
+   npm run test -- src/path/to/specific.test.tsx
+   pytest tests/test_specific.py
+   ```
+2. **全テスト実行時はタイムアウト付き**
+   ```bash
+   timeout 120 npm run test
+   timeout 120 pytest
+   ```
+3. **テスト完了後のプロセス確認**
+   ```bash
+   pgrep -f vitest && pkill -f vitest || true
+   pgrep -f pytest && pkill -f pytest || true
+   ```
+
+#### テスト失敗・中断時
+テストが失敗または中断した場合、次のテスト実行前に必ず残存プロセスを終了：
+```bash
+pkill -f vitest || true
+pkill -f pytest || true
+sleep 1
+```
+
 ### レビュー
 
 MUST: 実装完了後はreviewerサブエージェントでレビューを行う
