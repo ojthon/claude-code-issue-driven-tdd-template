@@ -102,6 +102,40 @@ NEVER: 以下を行ってはならない
 - UI/UX作業で /frontend-design スキルを使用しないこと
 - N+1クエリ
 
+## commit/pushルール
+
+NEVER: 以下を行ってはならない
+- `--no-verify` フラグの使用
+- Lint/Format/型エラーを無視したcommit/push
+- エラー回避のためにpre-commit、pre-push、lint-staged、biome.json、pyproject.toml等の設定を変更すること
+
+commit/push時にエラーが発生した場合:
+1. エラーを修正
+2. 修正をステージ・コミット
+3. 再度push
+
+### Lint/Format/型エラーの修正方針
+
+1. **まず自動修正を試す**
+   - Frontend: `npm run lint:fix`
+   - Backend: `ruff check --fix . && ruff format .`
+
+2. **残ったエラーは手動で対処**
+   - 未使用変数 → 削除またはアンダースコアプレフィックス
+   - 型エラー → 適切な型注釈を追加
+
+3. **警告の抑制は最後の手段**
+   - 正当な理由がある場合のみ `// biome-ignore` や `# noqa` を使用
+   - 抑制する場合は理由をコメントで明記
+
+## デプロイルール
+
+CRITICAL: 本番デプロイはユーザーの明示的な指示がある場合のみ実行する
+
+NEVER: 以下を行ってはならない
+- ユーザーの明示的な指示なしに本番環境を操作すること
+- 本番ブランチで直接作業すること
+
 ## Frontend Design
 
 MUST: このセクションの内容に従ってフロントエンドを実装する
