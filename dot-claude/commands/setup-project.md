@@ -2,26 +2,39 @@
 description: 新規プロジェクトの初期化
 ---
 
-ultrathink 新しいプロジェクトを開始します。
+新しいプロジェクトを開始します。
 
 ## フロー
 
 以下の流れで進めます。各ステップの詳細はClaude Codeに任せてください。
 
 1. **ヒアリング**: プロジェクト概要、ターゲット、主要機能、技術要望を確認
-2. **要件定義**: docs/requirements.md を生成
-3. **設計**:
+2. **技術スタック選択**: 以下から選択（またはヒアリング結果から判断）
+   - `nextjs-only`: Next.js + Prisma（フルスタックWeb）
+   - `nextjs-fastapi`: Next.js + FastAPI（Web + Python Backend）
+   - `ios-swift`: Swift 6 + SwiftUI（iOSアプリ）
+3. **要件定義**: docs/requirements.md を生成
+4. **設計**:
    - docs/architecture.md（システム構成、技術スタック）
-   - docs/database-schema.md（ER図、テーブル定義）
-   - docs/api-spec.md（エンドポイント仕様）
-4. **CLAUDE.md生成**: 下記テンプレートを基に、ヒアリング結果を反映して生成
-5. **タスク分解**: docs/breakdown.md にタスク一覧を作成
+   - docs/database-schema.md（ER図、テーブル定義）※iOSの場合はSwiftDataスキーマ
+   - docs/api-spec.md（エンドポイント仕様）※該当する場合
+5. **CLAUDE.md生成**: `project-templates/{{選択したスタック}}/CLAUDE.md` を基に、ヒアリング結果を反映して生成
+6. **タスク分解**: docs/breakdown.md にタスク一覧を作成
 
 ## CLAUDE.md テンプレート
 
-以下のテンプレートをそのままコピーしてCLAUDE.mdを生成する。
+選択した技術スタックに応じて、`project-templates/` 内のテンプレートを使用する。
+- `project-templates/nextjs-only/CLAUDE.md` - Next.js + Prisma用
+- `project-templates/nextjs-fastapi/CLAUDE.md` - Next.js + FastAPI用
+- `project-templates/ios-swift/CLAUDE.md` - Swift 6 + SwiftUI用
+
+**テンプレート使用ルール:**
 - `{{プレースホルダー}}` の部分のみヒアリング結果で置き換える
 - それ以外の部分（開発原則、禁止事項、Frontend Design等）は**一字一句そのまま転記**する
+
+### 汎用テンプレート（参考）
+
+以下は基本構造の参考。実際には上記テンプレートファイルを使用すること。
 
 ```markdown
 # {{プロジェクト名}}
@@ -103,6 +116,13 @@ MUST: 実装完了後はreviewerサブエージェントでレビューを行う
 ### フロントエンド
 
 MUST: UI/UXのデザイン検討・設計・実装時は /frontend-design スキルを使用する
+
+### PLANモード
+
+MUST: 計画策定時は以下を遵守する
+- 実装に必要なBash権限を事前に全て洗い出す
+- ExitPlanMode時に `allowedPrompts` パラメータで必要な権限を宣言する
+- 実行フェーズで追加の権限承認ダイアログが発生しないようにする
 
 ## 禁止事項
 
@@ -204,6 +224,14 @@ Create atmosphere and depth rather than defaulting to solid colors.
 | Migration | `cd backend && alembic upgrade head` |
 ```
 
+**iOS (Swift 6 + SwiftUI):**
+```
+| ビルド | Xcode: Cmd+B |
+| テスト | `xcodebuild test -scheme {{スキーム名}} -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.0'` |
+| Lint | `swiftlint` |
+| フォーマット | `swiftformat .` |
+```
+
 ### 技術スタック別の追加禁止事項
 
 **Next.js + Prisma:**
@@ -212,8 +240,20 @@ Create atmosphere and depth rather than defaulting to solid colors.
 **FastAPI:**
 - N+1クエリ
 
+**iOS (Swift 6):**
+- Force unwrap (!) の使用
+- 暗黙的アンラップ型 (IUO) の使用（IBOutlet以外）
+- `nonisolated(unsafe)` の使用
+- 新規enumに`.none`ケースを定義すること
+- XCTestExpectation の新規使用（async/awaitを使用）
+- `@unchecked Sendable` の安易な使用
+- APIキーをアプリバイナリに埋め込むこと
+
 ## 完了条件
 
-- 上記ドキュメントがすべて生成されている
+- 上記ドキュメントがすべて生成されている（技術スタックに応じて必要なもの）
+  - Webアプリ: requirements.md, architecture.md, database-schema.md, api-spec.md
+  - iOSアプリ: requirements.md, architecture.md, database-schema.md（SwiftDataスキーマ）
+- CLAUDE.md がテンプレートを基に生成されている
 - docs/breakdown.md にタスク一覧が記載されている
 - 「docs/breakdown.md のタスク1から実装を始められます」と案内

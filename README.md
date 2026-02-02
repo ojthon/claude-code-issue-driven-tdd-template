@@ -36,8 +36,7 @@ cd your-project
 claude-code-issue-driven-tdd-template/
 ├── dot-claude/
 │   ├── commands/
-│   │   ├── setup-project.md   # プロジェクト初期化
-│   │   └── release.md         # リリース準備
+│   │   └── setup-project.md   # プロジェクト初期化
 │   └── agents/
 │       └── reviewer.md        # コードレビュー（独立コンテキスト）
 ├── project-templates/
@@ -65,9 +64,6 @@ claude-code-issue-driven-tdd-template/
 
 「Issue #2を実装して」
   → ...繰り返し...
-
-【リリースフェーズ】
-/release v1.0.0
 ```
 
 ---
@@ -77,7 +73,6 @@ claude-code-issue-driven-tdd-template/
 | コマンド | 説明 |
 |----------|------|
 | `/setup-project` | 新規プロジェクト初期化（ヒアリング→設計→Issue作成） |
-| `/release [バージョン]` | リリース準備（CHANGELOG→タグ→GitHub Release） |
 
 ### エージェント
 
@@ -98,10 +93,6 @@ claude-code-issue-driven-tdd-template/
 ### 独立コンテキストでのレビュー
 
 `reviewer`エージェントは独立したコンテキストで動作するため、実装時のバイアスを回避できる。
-
-### ultrathinkの活用
-
-すべてのコマンド・エージェントでultrathinkを使用し、深い思考を促進。
 
 ---
 
