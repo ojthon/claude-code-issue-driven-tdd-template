@@ -6,28 +6,49 @@ description: 新規プロジェクトの初期化
 
 ## フロー
 
-以下の流れで進めます。各ステップの詳細はClaude Codeに任せてください。
+以下の流れで進めます。**各フェーズにレビューゲートがあり、ユーザーの承認を得てから次に進む。**
 
-1. **ヒアリング**: プロジェクト概要、ターゲット、主要機能、技術要望を確認
-2. **技術スタック選択**: 以下から選択（またはヒアリング結果から判断）
-   - `nextjs-only`: Next.js + Prisma（フルスタックWeb）
-   - `nextjs-fastapi`: Next.js + FastAPI（Web + Python Backend）
-   - `ios-swift`: Swift 6 + SwiftUI（iOSアプリ）
-3. **要件定義**: docs/requirements.md を生成
-4. **設計**:
-   - docs/architecture.md（システム構成、技術スタック）
-   - docs/database-schema.md（ER図、テーブル定義）※iOSの場合はSwiftDataスキーマ
-   - docs/api-spec.md（エンドポイント仕様）※該当する場合
-5. **CLAUDE.md生成**: `project-templates/{{選択したスタック}}/CLAUDE.md` を基に、ヒアリング結果を反映して生成
-6. **git hook設定**: commit前・push前の自動チェックを設定
-   - 技術スタックに応じて以下から選択：
-     - **Node.js単体**: husky + lint-staged
-     - **Python単体**: pre-commit
-     - **モノレポ（複数言語）**: pre-commit（推奨）またはlefthook
-     - **iOS (Swift)**: swiftlint + swiftformat（Xcodeビルドフェーズまたはpre-commit）
-   - commit前: lint、format、型チェック
-   - push前: テスト実行
-7. **タスク分解**: docs/breakdown.md にタスク一覧を作成
+### Phase 1: ヒアリング（仕様確定）
+
+MUST: 仕様が一意に確定するまでAskUserQuestionで質問を繰り返す。1回のヒアリングで次に進まない。
+
+確認すべき項目：
+- プロジェクト概要・目的
+- ターゲットユーザー
+- MVP機能一覧（各機能の**具体的な振る舞い**まで確認する）
+- 非機能要件（パフォーマンス、セキュリティ等）
+- 技術スタック選択:
+  - `nextjs-only`: Next.js + Prisma（フルスタックWeb）
+  - `nextjs-fastapi`: Next.js + FastAPI（Web + Python Backend）
+  - `ios-swift`: Swift 6 + SwiftUI（iOSアプリ）
+
+**ゲート条件:** すべての機能の振る舞いが曖昧さなく定義されていること。不明点が残っている場合はAskUserQuestionで追加質問する。
+
+### Phase 2: 要件定義書生成 + レビュー
+
+1. `docs/requirements.md` を生成する
+2. AskUserQuestionで要件定義書のレビューを依頼する
+   - 選択肢: 「承認する」「修正が必要」
+3. 「修正が必要」の場合 → 修正内容を確認し、修正→再レビューを繰り返す
+4. 「承認する」が選ばれたらPhase 3へ進む
+
+### Phase 3: 設計ドキュメント生成 + レビュー
+
+1. 以下を生成する：
+   - `docs/architecture.md`（システム構成、技術スタック）
+   - `docs/database-schema.md`（ER図、テーブル定義）※iOSの場合はSwiftDataスキーマ
+   - `docs/api-spec.md`（エンドポイント仕様）※該当する場合
+2. AskUserQuestionで設計ドキュメントのレビューを依頼する
+   - 選択肢: 「承認する」「修正が必要」
+3. 「修正が必要」の場合 → 修正内容を確認し、修正→再レビューを繰り返す
+4. 「承認する」が選ばれたらPhase 4へ進む
+
+### Phase 4: CLAUDE.md生成 + タスクブレイクダウン
+
+1. `project-templates/{{選択したスタック}}/CLAUDE.md` を基に、ヒアリング結果を反映してCLAUDE.mdを生成する
+2. `docs/breakdown.md` にタスク一覧を作成する
+   - **git hook設定（commit前: lint/format/型チェック、push前: テスト実行）を最初のタスクとして含める**
+3. 「docs/breakdown.md のタスク1から実装を始められます」と案内する
 
 ## CLAUDE.md テンプレート
 
@@ -296,6 +317,8 @@ Create atmosphere and depth rather than defaulting to solid colors.
 - 上記ドキュメントがすべて生成されている（技術スタックに応じて必要なもの）
   - Webアプリ: requirements.md, architecture.md, database-schema.md, api-spec.md
   - iOSアプリ: requirements.md, architecture.md, database-schema.md（SwiftDataスキーマ）
+- 要件定義書がユーザーに承認されている
+- 設計ドキュメントがユーザーに承認されている
 - CLAUDE.md がテンプレートを基に生成されている
-- docs/breakdown.md にタスク一覧が記載されている
+- docs/breakdown.md にタスク一覧が記載されている（git hook設定を最初のタスクとして含む）
 - 「docs/breakdown.md のタスク1から実装を始められます」と案内
